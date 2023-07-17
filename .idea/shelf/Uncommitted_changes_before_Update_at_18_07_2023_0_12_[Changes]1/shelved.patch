@@ -1,0 +1,64 @@
+Index: src/test/java/ru/praktikum_services/qa_scooter/ImportantQuestions.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.praktikum_services.qa_scooter;\r\n\r\nimport org.junit.After;\r\nimport org.junit.Before;\r\nimport org.junit.Test;\r\nimport org.openqa.selenium.By;\r\nimport org.junit.runner.RunWith;\r\nimport org.junit.runners.Parameterized;\r\nimport org.openqa.selenium.WebDriver;\r\nimport org.openqa.selenium.WebElement;\r\nimport org.openqa.selenium.chrome.ChromeDriver;\r\nimport org.openqa.selenium.firefox.FirefoxDriver;\r\nimport org.openqa.selenium.JavascriptExecutor;\r\n\r\nimport java.awt.*;\r\nimport java.util.List;\r\nimport java.util.concurrent.TimeUnit;\r\n\r\nimport static org.junit.Assert.assertEquals;\r\n\r\n        @RunWith(Parameterized.class)\r\n\r\n        public class ImportantQuestions {\r\n            private WebDriver webDriver;\r\n            private final String question;\r\n            private final String answer;\r\n            private final boolean isVisible;\r\n\r\n        public ImportantQuestions (String question, String answer, boolean isVisible) {\r\n            this.question = question;\r\n            this.answer = answer;\r\n            this.isVisible = isVisible;\r\n        }\r\n\r\n        @Parameterized.Parameters\r\n        public static Object[][] getAnswer() {\r\n            return new Object[][] {\r\n                    { \"Сколько это стоит? И как оплатить?\", \"Сутки — 400 рублей. Оплата курьеру — наличными или картой.\", true},\r\n                    { \"Хочу сразу несколько самокатов! Так можно?\", \"Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим.\", true},\r\n                    { \"Как рассчитывается время аренды?\", \"Допустим, вы оформляете заказ на 8 мая. Мы привозим самокат 8 мая в течение дня. Отсчёт времени аренды начинается с момента, когда вы оплатите заказ курьеру. Если мы привезли самокат 8 мая в 20:30, суточная аренда закончится 9 мая в 20:30.\", true},\r\n                    { \"Можно ли заказать самокат прямо на сегодня?\", \"Только начиная с завтрашнего дня. Но скоро станем расторопнее.\", true},\r\n                    { \"Можно ли продлить заказ или вернуть самокат раньше?\", \"Пока что нет! Но если что-то срочное — всегда можно позвонить в поддержку по красивому номеру 1010.\", true},\r\n                    { \"Вы привозите зарядку вместе с самокатом?\", \"Самокат приезжает к вам с полной зарядкой. Этого хватает на восемь суток — даже если будете кататься без передышек и во сне. Зарядка не понадобится.\", true},\r\n                    { \"Можно ли отменить заказ?\", \"Да, пока самокат не привезли. Штрафа не будет, объяснительной записки тоже не попросим. Все же свои.\", true},\r\n                    { \"Я жизу за МКАДом, привезёте?\", \"Да, обязательно. Всем самокатов! И Москве, и Московской области.\", true},\r\n            };\r\n        }\r\n\r\n\r\n        @Before\r\n        public void setUp() {\r\n             webDriver = new ChromeDriver();\r\n            //webDriver = new FirefoxDriver();\r\n            webDriver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);\r\n        }\r\n\r\n        @Test\r\n\r\n        public void OpenQuestions () {\r\n            MainObject mainObject = new MainObject(webDriver);\r\n            mainObject.open();\r\n            mainObject.scrollitQustions();\r\n            mainObject.clickQuestion(question);\r\n            mainObject.proverkaTextAnswer(question,answer,isVisible);\r\n        }\r\n\r\n        @After\r\n        public void tearDown() {\r\n            webDriver.quit();\r\n        }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/ru/praktikum_services/qa_scooter/ImportantQuestions.java b/src/test/java/ru/praktikum_services/qa_scooter/ImportantQuestions.java
+--- a/src/test/java/ru/praktikum_services/qa_scooter/ImportantQuestions.java	
++++ b/src/test/java/ru/praktikum_services/qa_scooter/ImportantQuestions.java	
+@@ -3,20 +3,13 @@
+ import org.junit.After;
+ import org.junit.Before;
+ import org.junit.Test;
+-import org.openqa.selenium.By;
+ import org.junit.runner.RunWith;
+ import org.junit.runners.Parameterized;
+ import org.openqa.selenium.WebDriver;
+-import org.openqa.selenium.WebElement;
+ import org.openqa.selenium.chrome.ChromeDriver;
+ import org.openqa.selenium.firefox.FirefoxDriver;
+-import org.openqa.selenium.JavascriptExecutor;
+-
+-import java.awt.*;
+-import java.util.List;
+ import java.util.concurrent.TimeUnit;
+ 
+-import static org.junit.Assert.assertEquals;
+ 
+         @RunWith(Parameterized.class)
+ 
+Index: src/test/java/ru/praktikum_services/qa_scooter/OrderSamokat.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.praktikum_services.qa_scooter;\r\n\r\nimport org.junit.After;\r\nimport org.junit.Assert;\r\nimport org.junit.Before;\r\nimport org.junit.Test;\r\nimport org.junit.runner.RunWith;\r\nimport org.junit.runners.Parameterized;\r\nimport org.openqa.selenium.By;\r\nimport org.openqa.selenium.WebDriver;\r\nimport org.openqa.selenium.chrome.ChromeDriver;\r\nimport org.openqa.selenium.firefox.FirefoxDriver;\r\n\r\n\r\nimport java.util.concurrent.TimeUnit;\r\n\r\n        @RunWith(Parameterized.class)\r\n        public class OrderSamokat {\r\n            private WebDriver webDriver;\r\n            private final String name;\r\n            private final String surname;\r\n            private final String address;\r\n            private final String phone;\r\n            private final String comments;\r\n\r\n            public OrderSamokat(String name, String surname, String address, String phone, String comments) {\r\n                this.name = name;\r\n                this.surname = surname;\r\n                this.address = address;\r\n                this.phone = phone;\r\n                this.comments = comments;\r\n            }\r\n\r\n            @Parameterized.Parameters\r\n            public static Object[][] inputUser() {\r\n                return new Object[][]{\r\n                        {\"Альбина\", \"Горелова\", \"г. Москва, ул. Маяковская д.1 кв.1\", \"79999999999\", \"Оставьте, пожалуйста, заказ у двери\"},\r\n                        {\"Петя\", \"Иванов\", \"г. Пенза\", \"79019999911\", \"\"},\r\n                };\r\n            }\r\n\r\n\r\n            @Before\r\n            public void setUp() {\r\n                webDriver = new ChromeDriver();\r\n                //webDriver = new FirefoxDriver();\r\n\r\n            }\r\n\r\n            @Test\r\n            public void oformlenieOrderHeader() {\r\n\r\n                AboutUserScooter aboutUserScooter = new AboutUserScooter(webDriver);\r\n                aboutUserScooter.open();\r\n                aboutUserScooter.clickOrderHeader();\r\n\r\n                // Для кого самокат\r\n                aboutUserScooter.inputAboutUserScooter(name, surname, address, phone);\r\n                aboutUserScooter.clickNext();\r\n\r\n                // Про аренду\r\n                AboutRentScooter aboutRentScooter = new AboutRentScooter(webDriver);\r\n                aboutRentScooter.inputAboutRentScooter(comments);\r\n                aboutRentScooter.clickOrderButton();\r\n\r\n                OrderDone orderDone = new OrderDone(webDriver);\r\n                Assert.assertTrue(\"Не открылось модальное окно 'Хотите оформить заказ?'\", orderDone.openPopupYesNo());\r\n                orderDone.clickPopupYes();\r\n                Assert.assertTrue(\"Не открылось окно успешного оформления заказа 'Заказ оформлен'\", orderDone.openPopupDone());\r\n\r\n            }\r\n\r\n            @Test\r\n            public void oformlenieOrderDown() {\r\n                AboutUserScooter aboutUserScooter = new AboutUserScooter(webDriver);\r\n                aboutUserScooter.open();\r\n                aboutUserScooter.scrollitQustions();\r\n                aboutUserScooter.clickOrderDown();\r\n\r\n                // Для кого самокат\r\n                aboutUserScooter.inputAboutUserScooter(name, surname, address, phone);\r\n                aboutUserScooter.clickNext();\r\n\r\n                // Про аренду\r\n                AboutRentScooter aboutRentScooter = new AboutRentScooter(webDriver);\r\n                aboutRentScooter.inputAboutRentScooter(comments);\r\n                aboutRentScooter.clickOrderButton();\r\n\r\n                OrderDone orderDone = new OrderDone(webDriver);\r\n                Assert.assertTrue(\"Не открылось модальное окно 'Хотите оформить заказ?'\", orderDone.openPopupYesNo());\r\n                orderDone.clickPopupYes();\r\n                Assert.assertTrue(\"Не открылось окно успешного оформления заказа 'Заказ оформлен'\", orderDone.openPopupDone());\r\n            }\r\n\r\n            @After\r\n            public void tearDown() {\r\n                webDriver.quit();\r\n            }\r\n\r\n        }\r\n\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/ru/praktikum_services/qa_scooter/OrderSamokat.java b/src/test/java/ru/praktikum_services/qa_scooter/OrderSamokat.java
+--- a/src/test/java/ru/praktikum_services/qa_scooter/OrderSamokat.java	
++++ b/src/test/java/ru/praktikum_services/qa_scooter/OrderSamokat.java	
+@@ -6,14 +6,10 @@
+ import org.junit.Test;
+ import org.junit.runner.RunWith;
+ import org.junit.runners.Parameterized;
+-import org.openqa.selenium.By;
+ import org.openqa.selenium.WebDriver;
+ import org.openqa.selenium.chrome.ChromeDriver;
+ import org.openqa.selenium.firefox.FirefoxDriver;
+ 
+-
+-import java.util.concurrent.TimeUnit;
+-
+         @RunWith(Parameterized.class)
+         public class OrderSamokat {
+             private WebDriver webDriver;
+@@ -96,7 +92,6 @@
+             public void tearDown() {
+                 webDriver.quit();
+             }
+-
+         }
+ 
+ 
